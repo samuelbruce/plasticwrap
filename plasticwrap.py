@@ -56,9 +56,11 @@ class PlasticWrap:
             return True
         return None
     
-    def get_changes(self, workspace):
+    def get_changes(self, workspace, types=None):
         url = self.api_url + "/wkspaces/" + workspace + "/changes"
-        req = requests.get(url)
+        if types is None: types = "changed"
+        params = {"types": types}
+        req = requests.get(url, json=params)
         if req.status_code == 200:
             return json.loads(req.content)
         return None
@@ -67,6 +69,6 @@ class PlasticWrap:
         url = self.api_url + "/wkspaces/" + workspace + "/changes"
         params = {"paths": paths}
         req = requests.delete(url, json=params)
-        if req.status == 200:
+        if req.status_code == 200:
             return json.loads(req.content)
         return None
