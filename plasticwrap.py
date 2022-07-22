@@ -55,3 +55,27 @@ class PlasticWrap:
         if req.status_code == 200:
             return True
         return None
+    
+    def get_changes(self, workspace, types=None):
+        url = self.api_url + "/wkspaces/" + workspace + "/changes"
+        if types is None: types = "changed"
+        params = {"types": types}
+        req = requests.get(url, json=params)
+        if req.status_code == 200:
+            return json.loads(req.content)
+        return None
+    
+    def undo_changes(self, workspace, paths):
+        url = self.api_url + "/wkspaces/" + workspace + "/changes"
+        params = {"paths": paths}
+        req = requests.delete(url, json=params)
+        if req.status_code == 200:
+            return json.loads(req.content)
+        return None
+    
+    def checkout(self, workspace, path):
+        url = self.api_url + "/wkspaces/" + workspace + "/content/" + path
+        req = requests.put(url)
+        if req.status_code == 200:
+            return json.loads(req.content)
+        return None
