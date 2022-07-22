@@ -72,3 +72,10 @@ class PlasticWrap:
         if req.status_code == 200:
             return json.loads(req.content)
         return None
+    
+    def checkout(self, workspace, path):
+        url = self.api_url + "/wkspaces/" + workspace + "/content/" + path
+        req = requests.put(url)
+        if req.status_code == 200:
+            return json.loads(req.content)
+        return None
