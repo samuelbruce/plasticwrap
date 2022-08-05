@@ -79,3 +79,11 @@ class PlasticWrap:
         if req.status_code == 200:
             return json.loads(req.content)
         return None
+    
+    def move(self, workspace, path, destination):
+        url = self.api_url + "/wkspaces/" + workspace + "/content/" + path
+        params = {"destination": destination}
+        req = requests.patch(url, json=params)
+        if req.status_code == 200:
+            return json.loads(req.content)
+        return None
