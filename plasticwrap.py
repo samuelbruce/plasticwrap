@@ -27,23 +27,25 @@ class PlasticWrap:
         if self.api_process is not None:
             self.api_process.terminate()
     
-    def _req(self, url, params, data):
-        pass
+    def _req(self, method, url, params, data):
+        url = self.api_url + url
+        response = requests.request(method=method, url=url, params=params, json=data)
+        return response
     
     def _delete(self, url, params, data):
-        pass
+        return _req(method="DELETE", url=url, params=params, data=data)
     
     def _get(self, url, params, data):
-        pass
+        return _req(method="GET", url=url, params=params, data=data)
     
     def _patch(self, url, params, data):
-        pass
+        return _req(method="PATCH", url=url, params=params, data=data)
     
     def _post(self, url, params, data):
-        pass
+        return _req(method="POST", url=url, params=params, data=data)
     
     def _put(self, url, params, data):
-        pass
+        return _req(method="PUT", url=url, params=params, data=data)
     
     def get_repos(self):
         url = self.api_url + "/repos"
