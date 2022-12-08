@@ -1,5 +1,6 @@
 
 import json
+import re
 import requests
 import subprocess
 import sys
@@ -9,9 +10,19 @@ class PlasticWrap:
     def __init__(self, api_url="http://localhost:9090/api/v1"):
         self.api_url = api_url
         self.api_process = None
+    
+    def __enter__(self):
+        self._connect()
+        return self
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.api_process is not None:
+            self.api_process.terminate()
+    
+    def _connect(self):
         # try a simple request, invoke cm api if it fails
         try:
-            requests.get(api_url)
+            requests.get(self.api_url)
         except requests.ConnectionError:
             print("Starting Plastic API")
             startupinfo = subprocess.STARTUPINFO()
@@ -19,13 +30,6 @@ class PlasticWrap:
             startupinfo.wShowWindow = subprocess.SW_HIDE
             self.api_process = subprocess.Popen(r"cm api", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo)
             time.sleep(2.5)
-    
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        if self.api_process is not None:
-            self.api_process.terminate()
     
     def _req(self, method, url, params, data):
         url = self.api_url + url
@@ -46,6 +50,23 @@ class PlasticWrap:
     
     def _put(self, url, params, data):
         return _req(method="PUT", url=url, params=params, data=data)
+    
+    def _append_url(func):
+        def wrapper(self, *args, **kwargs):
+            url = func.__kwdefaults__["url"]
+            if ':' in url:
+                matches = re.findall('/:\w{1,}', url)
+                for match in matches:
+                    key = match[2:]
+                    val = kwargs.get(key)
+                    url = url.replace(match[1:], val)
+            url = self.api_url + url
+            return url
+        return wrapper
+
+    @_append_url
+    def test_append_url(self, *, url="/wkspaces/:wkname/changes"):
+        return url
     
     def get_repos(self):
         url = self.api_url + "/repos"
