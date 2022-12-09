@@ -10,6 +10,9 @@ class PlasticWrap:
     def __init__(self, api_url="http://localhost:9090/api/v1"):
         self.api_url = api_url
         self.api_process = None
+        method_definitions = [ { "method_name": "get_repos", "url_endpoint": "/repos" } ]
+        method_factory = PlasticWrapMethodFactory(self, method_definitions)
+        method_factory.generate_functions()
     
     def __enter__(self):
         self._connect()
@@ -65,9 +68,10 @@ class PlasticWrap:
         return wrapper
 
     @_append_url
-    def test_append_url(self, *, url="/wkspaces/:wkname/changes"):
+    def test_append_url(self, *, url="/repos/:repname/branches/:branchname/changesets"):
         return url
     
+    """
     def get_repos(self):
         url = self.api_url + "/repos"
         response = requests.get(url)
@@ -128,3 +132,35 @@ class PlasticWrap:
         if response.status_code == 200:
             return json.loads(response.content)
         return None
+    """
+
+class PlasticWrapMethod():
+    def __init__(self, parent, url_endpoint, url_params=[]):
+        self.parent = parent
+        self.url_endpoint = url_endpoint
+        self.url_params = url_params
+    
+    def __call__(self, *args, **kwargs):
+        url = self.parent.api_url + self.url_endpoint
+        if self.url_params:
+            for url_param in self.url_params:
+                url_value = kwargs.get(url_param)
+                url = url.replace(":" + url_param, url_value)
+        return url
+
+
+class PlasticWrapMethodFactory():
+    def __init__(self, parent, definitions):
+        self.parent = parent
+        self.definitions = definitions
+    
+    def generate_functions(self):
+        for definition in self.definitions:
+            method_name = definition["method_name"]
+            url_endpoint = definition["url_endpoint"]
+            try:
+                url_params = definition["url_params"]
+            except KeyError:
+                url_params = []
+            method = PlasticWrapMethod(self.parent, url_endpoint, url_params)
+            setattr(self.parent, method_name, method)
