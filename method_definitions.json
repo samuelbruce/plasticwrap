@@ -22,6 +22,17 @@
 		]
 	},
 	{
+		"method_name": "rename_repo",
+		"http_method": "PUT",
+		"url_endpoint": "/repos/:repname",
+		"url_params": [
+			"repname"
+		],
+		"json_params": [
+			"name"
+		]
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
