@@ -13,6 +13,15 @@
 		]
 	},
 	{
+		"method_name": "create_repo",
+		"http_method": "POST",
+		"url_endpoint": "/repos",
+		"json_params": [
+			"name",
+			"server"
+		]
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
