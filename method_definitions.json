@@ -1,0 +1,37 @@
+[
+	{
+		"method_name": "get_repos", 
+		"http_method": "GET",
+		"url_endpoint": "/repos" 
+	},
+	{
+		"method_name": "get_repo_by_name",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname",
+		"url_params": [
+			"repname"
+		]
+	},
+	{
+		"method_name": "get_changesets_by_branch",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
+		"url_params": [
+			"repname",
+			"branchname"
+		],
+		"query": true
+	},
+	{
+		"method_name": "switch_workspace",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/switch",
+		"url_params": [
+			"wkname"
+		],
+		"json_params": [
+			"objectType",
+			"object"
+		]
+	}
+]
