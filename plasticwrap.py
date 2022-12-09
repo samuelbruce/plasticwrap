@@ -12,7 +12,8 @@ class PlasticWrap:
         self.api_process = None
         method_definitions = [ 
             { "method_name": "get_repos", "http_method": "GET", "url_endpoint": "/repos" },
-            { "method_name": "get_changesets_by_branch", "http_method": "GET", "url_endpoint": "/repos/:repname/branches/:branchname/changesets", "url_params": ["repname", "branchname"], "query": True }
+            { "method_name": "get_changesets_by_branch", "http_method": "GET", "url_endpoint": "/repos/:repname/branches/:branchname/changesets", "url_params": ["repname", "branchname"], "query": True },
+            { "method_name": "switch_workspace", "http_method": "POST", "url_endpoint": "/wkspaces/:wkname/switch", "url_params": ["wkname"], "json_params": ["objectType", "object"] }
         ]
         method_factory = PlasticWrapMethodFactory(self, method_definitions)
         method_factory.generate_functions()
@@ -37,26 +38,6 @@ class PlasticWrap:
             self.api_process = subprocess.Popen(r"cm api", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo)
             time.sleep(2.5)
     
-    def _req(self, method, url, params, data):
-        url = self.api_url + url
-        response = requests.request(method=method, url=url, params=params, json=data)
-        return response
-    
-    def _delete(self, url, params, data):
-        return _req(method="DELETE", url=url, params=params, data=data)
-    
-    def _get(self, url, params, data):
-        return _req(method="GET", url=url, params=params, data=data)
-    
-    def _patch(self, url, params, data):
-        return _req(method="PATCH", url=url, params=params, data=data)
-    
-    def _post(self, url, params, data):
-        return _req(method="POST", url=url, params=params, data=data)
-    
-    def _put(self, url, params, data):
-        return _req(method="PUT", url=url, params=params, data=data)
-    
     def _append_url(func):
         def wrapper(self, *args, **kwargs):
             url = func.__kwdefaults__["url"]
@@ -74,14 +55,21 @@ class PlasticWrap:
     def test_append_url(self, *, url="/repos/:repname/branches/:branchname/changesets"):
         return url
     
-    """
-    def get_repos(self):
-        url = self.api_url + "/repos"
-        response = requests.get(url)
-        if response.status_code == 200:
+    def request(self, http_method, url, json_params):
+        print(http_method)
+        print(url)
+        print(json_params)
+        if json_params:
+            print("json params")
+            response = requests.request(http_method, url, json=json_params)
+        else:
+            response = requests.request(http_method, url, json=[])
+        print(response.status_code)
+        if response.status_code >= 200 and response.status_code < 300:
             return response.json()
         return None
-    
+     
+    """
     def get_workspaces(self):
         url = self.api_url + "/wkspaces"
         response = requests.get(url)
@@ -138,11 +126,13 @@ class PlasticWrap:
     """
 
 class PlasticWrapMethod():
-    def __init__(self, parent, http_method, url_endpoint, url_params=[], query=False):
+    def __init__(self, parent, http_method, url_endpoint, url_params=[], query=False, json_params=[]):
         self.parent = parent
+        self.http_method = http_method
         self.url_endpoint = url_endpoint
         self.url_params = url_params
         self.query = query
+        self.json_params = json_params
     
     def __call__(self, *args, **kwargs):
         url = self.parent.api_url + self.url_endpoint
@@ -152,13 +142,24 @@ class PlasticWrapMethod():
                 try:
                     url = url.replace(":" + url_param, url_value)
                 except TypeError:
-                    # raise an exception
+                    # raise an exception?
                     pass
         if self.query:
             q = kwargs.get("q")
             if q:
                 url = url + "?q=" + q
-        return url
+        json_params = {}
+        if self.json_params:
+            print("got self.json_params")
+            for json_param in self.json_params:
+                p = kwargs.get(json_param)
+                if p:
+                    json_params.update({json_param: p})
+                else:
+                    # raise an exception?
+                    pass
+        # TODO: parse the response json
+        return self.parent.request(self.http_method, url, json_params)
 
 
 class PlasticWrapMethodFactory():
@@ -179,5 +180,9 @@ class PlasticWrapMethodFactory():
                 query = definition["query"]
             except KeyError:
                 query = False
-            method = PlasticWrapMethod(self.parent, http_method, url_endpoint, url_params, query)
+            try:
+                json_params = definition["json_params"]
+            except KeyError:
+                json_params = []
+            method = PlasticWrapMethod(self.parent, http_method, url_endpoint, url_params, query, json_params)
             setattr(self.parent, method_name, method)
