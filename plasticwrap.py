@@ -33,23 +33,6 @@ class PlasticWrap:
             self.api_process = subprocess.Popen(r"cm api", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo)
             time.sleep(2.5)
     
-    def _append_url(func):
-        def wrapper(self, *args, **kwargs):
-            url = func.__kwdefaults__["url"]
-            if ':' in url:
-                matches = re.findall('/:\w{1,}', url)
-                for match in matches:
-                    key = match[2:]
-                    val = kwargs.get(key)
-                    url = url.replace(match[1:], val)
-            url = self.api_url + url
-            return url
-        return wrapper
-
-    @_append_url
-    def test_append_url(self, *, url="/repos/:repname/branches/:branchname/changesets"):
-        return url
-    
     def request(self, http_method, url, json_params):
         print(http_method)
         print(url)
