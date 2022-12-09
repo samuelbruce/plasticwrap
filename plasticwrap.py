@@ -10,7 +10,10 @@ class PlasticWrap:
     def __init__(self, api_url="http://localhost:9090/api/v1"):
         self.api_url = api_url
         self.api_process = None
-        method_definitions = [ { "method_name": "get_repos", "url_endpoint": "/repos" } ]
+        method_definitions = [ 
+            { "method_name": "get_repos", "http_method": "GET", "url_endpoint": "/repos" },
+            { "method_name": "get_changesets_by_branch", "http_method": "GET", "url_endpoint": "/repos/:repname/branches/:branchname/changesets", "url_params": ["repname", "branchname"], "query": True }
+        ]
         method_factory = PlasticWrapMethodFactory(self, method_definitions)
         method_factory.generate_functions()
     
@@ -135,17 +138,26 @@ class PlasticWrap:
     """
 
 class PlasticWrapMethod():
-    def __init__(self, parent, url_endpoint, url_params=[]):
+    def __init__(self, parent, http_method, url_endpoint, url_params=[], query=False):
         self.parent = parent
         self.url_endpoint = url_endpoint
         self.url_params = url_params
+        self.query = query
     
     def __call__(self, *args, **kwargs):
         url = self.parent.api_url + self.url_endpoint
         if self.url_params:
             for url_param in self.url_params:
                 url_value = kwargs.get(url_param)
-                url = url.replace(":" + url_param, url_value)
+                try:
+                    url = url.replace(":" + url_param, url_value)
+                except TypeError:
+                    # raise an exception
+                    pass
+        if self.query:
+            q = kwargs.get("q")
+            if q:
+                url = url + "?q=" + q
         return url
 
 
@@ -157,10 +169,15 @@ class PlasticWrapMethodFactory():
     def generate_functions(self):
         for definition in self.definitions:
             method_name = definition["method_name"]
+            http_method = definition["http_method"]
             url_endpoint = definition["url_endpoint"]
             try:
                 url_params = definition["url_params"]
             except KeyError:
                 url_params = []
-            method = PlasticWrapMethod(self.parent, url_endpoint, url_params)
+            try:
+                query = definition["query"]
+            except KeyError:
+                query = False
+            method = PlasticWrapMethod(self.parent, http_method, url_endpoint, url_params, query)
             setattr(self.parent, method_name, method)
