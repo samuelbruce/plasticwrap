@@ -118,7 +118,7 @@ class PlasticWrapMethod():
             for url_param in self.url_params:
                 url_value = kwargs.get(url_param)
                 try:
-                    url = url.replace(":" + url_param, url_value)
+                    url = url.replace(":" + url_param, str(url_value))
                 except TypeError:
                     # raise an exception?
                     pass

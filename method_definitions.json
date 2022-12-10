@@ -135,10 +135,21 @@
 		"url_endpoint": "/repos/:repname/labels/:labelname"
 	},
 	{
+		"method_name": "get_changesets",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/changesets",
+		"query": true
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
 		"query": true
+	},
+	{
+		"method_name": "get_changeset",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/changesets/:changesetid"
 	},
 	{
 		"method_name": "switch_workspace",
