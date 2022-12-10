@@ -1,6 +1,7 @@
 
 import json
 import os
+import re
 import requests
 import subprocess
 import time
@@ -104,11 +105,11 @@ class PlasticWrap:
     """
 
 class PlasticWrapMethod():
-    def __init__(self, parent, http_method, url_endpoint, url_params=[], query=False, json_params=[]):
+    def __init__(self, parent, http_method, url_endpoint, query=False, json_params=[]):
         self.parent = parent
         self.http_method = http_method
         self.url_endpoint = url_endpoint
-        self.url_params = url_params
+        self.url_params = [x[2:] for x in re.findall('/:\w{1,}', url_endpoint)]
         self.query = query
         self.json_params = json_params
     
@@ -162,5 +163,5 @@ class PlasticWrapMethodFactory():
                 json_params = definition["json_params"]
             except KeyError:
                 json_params = []
-            method = PlasticWrapMethod(self.parent, http_method, url_endpoint, url_params, query, json_params)
+            method = PlasticWrapMethod(self.parent, http_method, url_endpoint, query, json_params)
             setattr(self.parent, method_name, method)

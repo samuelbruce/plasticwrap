@@ -1,16 +1,12 @@
-[
-	{
-		"method_name": "get_repos", 
+[{
+		"method_name": "get_repos",
 		"http_method": "GET",
-		"url_endpoint": "/repos" 
+		"url_endpoint": "/repos"
 	},
 	{
 		"method_name": "get_repo_by_name",
 		"http_method": "GET",
-		"url_endpoint": "/repos/:repname",
-		"url_params": [
-			"repname"
-		]
+		"url_endpoint": "/repos/:repname"
 	},
 	{
 		"method_name": "create_repo",
@@ -25,30 +21,25 @@
 		"method_name": "rename_repo",
 		"http_method": "PUT",
 		"url_endpoint": "/repos/:repname",
-		"url_params": [
-			"repname"
-		],
 		"json_params": [
 			"name"
 		]
 	},
 	{
+		"method_name": "delete_repo",
+		"http_method": "DELETE",
+		"url_endpoint": "/repos/:repname"
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
-		"url_params": [
-			"repname",
-			"branchname"
-		],
 		"query": true
 	},
 	{
 		"method_name": "switch_workspace",
 		"http_method": "POST",
 		"url_endpoint": "/wkspaces/:wkname/switch",
-		"url_params": [
-			"wkname"
-		],
 		"json_params": [
 			"objectType",
 			"object"
