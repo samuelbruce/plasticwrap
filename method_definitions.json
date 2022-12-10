@@ -158,7 +158,7 @@
 		"json_params": [
 			"type"
 		],
-		"_comment": "Not successfully tested, requests return 200 but content is a blank list. Maybe only lists changes that are checked in?"
+		"_comment": "Not successfully tested, requests return 200 but content is a blank list"
 	},
 	{
 		"method_name": "undo_pending_changes",
@@ -166,8 +166,7 @@
 		"url_endpoint": "/wkspaces/:wkname/changes",
 		"json_params": [
 			"paths"
-		],
-		"_comment": "Not tested"
+		]
 	},
 	{
 		"method_name": "update_workspace",
@@ -182,5 +181,21 @@
 			"objectType",
 			"object"
 		]
+	},
+	{
+		"method_name": "get_checkin_status",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces/:wkname/checkin"
+	},
+	{
+		"method_name": "checkin_pending_changes",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/checkin",
+		"json_params": [
+			"paths",
+			"comment",
+			"recurse"
+		],
+		"_comment": "Not successfully tested, requests return 200 but then shows status Failed with message 'There are no changes in the workspace' when really there are"
 	}
 ]
