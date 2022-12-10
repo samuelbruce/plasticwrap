@@ -196,6 +196,6 @@
 			"comment",
 			"recurse"
 		],
-		"_comment": "Not successfully tested, requests return 200 but then shows status Failed with message 'There are no changes in the workspace' when really there are"
+		"_comment": "Not successfully tested, requests return 200 but then get_checkin_status shows status Failed with message 'There are no changes in the workspace' when really there are"
 	}
 ]
