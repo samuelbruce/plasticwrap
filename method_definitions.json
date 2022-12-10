@@ -152,6 +152,29 @@
 		"url_endpoint": "/repos/:repname/changesets/:changesetid"
 	},
 	{
+		"method_name": "get_pending_changes",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces/:wkname/changes",
+		"json_params": [
+			"type"
+		],
+		"_comment": "Not successfully tested, requests return 200 but content is a blank list. Maybe only lists changes that are checked in?"
+	},
+	{
+		"method_name": "undo_pending_changes",
+		"http_method": "DELETE",
+		"url_endpoint": "/wkspaces/:wkname/changes",
+		"json_params": [
+			"paths"
+		],
+		"_comment": "Not tested"
+	},
+	{
+		"method_name": "update_workspace",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/update"
+	},
+	{
 		"method_name": "switch_workspace",
 		"http_method": "POST",
 		"url_endpoint": "/wkspaces/:wkname/switch",
