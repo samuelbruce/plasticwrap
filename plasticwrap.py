@@ -39,7 +39,6 @@ class PlasticWrap:
         print(url)
         print(json_params)
         if json_params:
-            print("json params")
             response = requests.request(http_method, url, json=json_params)
         else:
             response = requests.request(http_method, url, json=[])
@@ -129,7 +128,6 @@ class PlasticWrapMethod():
                 url = url + "?q=" + q
         json_params = {}
         if self.json_params:
-            print("got self.json_params")
             for json_param in self.json_params:
                 p = kwargs.get(json_param)
                 if p:
