@@ -138,6 +138,7 @@ class PlasticWrapMethod():
                     # raise an exception?
                     pass
         # TODO: parse the response json
+        # TODO: handle response 204 No Content
         return self.parent.request(self.http_method, url, json_params)
 
 

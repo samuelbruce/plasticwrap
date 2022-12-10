@@ -31,6 +31,40 @@
 		"url_endpoint": "/repos/:repname"
 	},
 	{
+		"method_name": "get_workspaces",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces"
+	},
+	{
+		"method_name": "get_workspace_by_name",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces/:wkname"
+	},
+	{
+		"method_name": "create_workspace",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces",
+		"json_params": [
+			"name",
+			"path",
+			"repository"
+		]
+	},
+	{
+		"method_name": "rename_workspace",
+		"http_method": "PATCH",
+		"_comment": "Plastic documentation gives PUT for this method but it returns 405, PATCH is correct",
+		"url_endpoint": "/wkspaces/:wkname",
+		"json_params": [
+			"name"
+		]
+	},
+	{
+		"method_name": "delete_workspace",
+		"http_method": "DELETE",
+		"url_endpoint": "/wkspaces/:wkname"
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
