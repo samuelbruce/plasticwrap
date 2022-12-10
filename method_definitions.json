@@ -100,6 +100,41 @@
 		"url_endpoint": "/repos/:repname/branches/:branchname"
 	},
 	{
+		"method_name": "get_labels",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/labels",
+		"query": true
+	},
+	{
+		"method_name": "get_label",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/labels/:labelname"
+	},
+	{
+		"method_name": "create_label",
+		"http_method": "POST",
+		"url_endpoint": "/repos/:repname/labels",
+		"json_params": [
+			"name",
+			"changeset",
+			"comment",
+			"applyToXlinks"
+		]
+	},
+	{
+		"method_name": "rename_label",
+		"http_method": "PATCH",
+		"url_endpoint": "/repos/:repname/labels/:labelname",
+		"json_params": [
+			"name"
+		]
+	},
+	{
+		"method_name": "delete_label",
+		"http_method": "DELETE",
+		"url_endpoint": "/repos/:repname/labels/:labelname"
+	},
+	{
 		"method_name": "get_changesets_by_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/changesets",
