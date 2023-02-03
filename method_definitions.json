@@ -183,6 +183,11 @@
 		]
 	},
 	{
+		"method_name": "get_switch_status",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces/:wkname/switch"
+	},
+	{
 		"method_name": "get_checkin_status",
 		"http_method": "GET",
 		"url_endpoint": "/wkspaces/:wkname/checkin"
