@@ -202,5 +202,30 @@
 			"recurse"
 		],
 		"_comment": "Not successfully tested, requests return 200 but then get_checkin_status shows status Failed with message 'There are no changes in the workspace' when really there are"
+	},
+	{
+		"method_name": "get_item_from_branch",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/branches/:branchname/contents/:itempath"
+	},
+	{
+		"method_name": "get_item_from_changeset",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/changesets/:changesetid/contents/:itempath"
+	},
+	{
+		"method_name": "get_item_from_label",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/labels/:labelname/contents/:itempath"
+	},
+	{
+		"method_name": "get_revision",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/revisions/:revid"
+	},
+	{
+		"method_name": "get_revision_contents",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/revisions/:revid/blob"
 	}
 ]

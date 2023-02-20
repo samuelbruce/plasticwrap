@@ -44,7 +44,10 @@ class PlasticWrap:
             response = requests.request(http_method, url, json=[])
         print(response.status_code)
         if response.status_code >= 200 and response.status_code < 300:
-            return response.json()
+            try:
+                return response.json()
+            except:
+                return response.iter_lines()
         return None
      
     """
