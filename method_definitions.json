@@ -266,8 +266,7 @@
 		"url_endpoint": "/wkspaces/:wkname/content/:path",
 		"json_params": [
 			"destination"
-		],
-		"_comment": "UNTESTED"
+		]
 	},
 	{
 		"method_name": "remove",
