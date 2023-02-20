@@ -242,5 +242,37 @@
 		"method_name": "diff_branch",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/branches/:branchname/diff"
+	},
+	{
+		"method_name": "add",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/content/:path",
+		"json_params": [
+			"addPrivateParents",
+			"checkoutParent",
+			"recurse"
+		],
+		"_comment": "UNTESTED"
+	},
+	{
+		"method_name": "checkout",
+		"http_method": "PUT",
+		"url_endpoint": "/wkspaces/:wkname/content/:path",
+		"_comment": "UNTESTED"
+	},
+	{
+		"method_name": "move",
+		"http_method": "PATCH",
+		"url_endpoint": "/wkspaces/:wkname/content/:path",
+		"json_params": [
+			"destination"
+		]
+		"_comment": "UNTESTED"
+	},
+	{
+		"method_name": "remove",
+		"http_method": "DELETE",
+		"url_endpoint": "/wkspaces/:wkname/content/:path",
+		"_comment": "UNTESTED"
 	}
 ]
