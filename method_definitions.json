@@ -227,5 +227,20 @@
 		"method_name": "get_revision_contents",
 		"http_method": "GET",
 		"url_endpoint": "/repos/:repname/revisions/:revid/blob"
+	},
+	{
+		"method_name": "diff_changeset",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/changesets/:changesetid/diff"
+	},
+	{
+		"method_name": "diff_changeset_with_source",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/changesets/:changesetid/diff/:sourcechangesetid"
+	},
+	{
+		"method_name": "diff_branch",
+		"http_method": "GET",
+		"url_endpoint": "/repos/:repname/branches/:branchname/diff"
 	}
 ]
