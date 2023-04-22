@@ -311,7 +311,13 @@
 		"json_params": [
 			"comment",
 			"paths"
-		]
+		],
 		"_comment": "tested, but shelve is only created if files are first added to source control"
+	},
+	{
+		"method_name": "apply_shelve",
+		"http_method": "PATCH",
+		"url_endpoint": "/wkspaces/:wkname/shelvesets/:shelvesetId",
+		"_comment": "not successfully tested, returns 500"
 	}
 ]
