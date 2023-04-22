@@ -293,5 +293,25 @@
 	{	"method_name": "fileinfo",
 		"http_method": "GET",
 		"url_endpoint": "/wkspaces/:wkname/fileinfo/:path"
+	},
+	{
+		"method_name": "undelete",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/undelete",
+		"json_params": [
+			"revSpec",
+			"path"
+		],
+		"_comment": "not successfully tested, just getting http 500"
+	},
+	{
+		"method_name": "create_shelve",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/shelvesets",
+		"json_params": [
+			"comment",
+			"paths"
+		]
+		"_comment": "tested, but shelve is only created if files are first added to source control"
 	}
 ]
