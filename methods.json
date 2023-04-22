@@ -289,5 +289,9 @@
 		"json_params": [
 			"changeset"
 		]
+	},
+	{	"method_name": "fileinfo",
+		"http_method": "GET",
+		"url_endpoint": "/wkspaces/:wkname/fileinfo/:path"
 	}
 ]
