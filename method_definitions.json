@@ -273,5 +273,13 @@
 		"http_method": "DELETE",
 		"url_endpoint": "/wkspaces/:wkname/content/:path",
 		"_comment": "UNTESTED"
+	},
+	{
+		"method_name": "merge_from",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkname/merge",
+		"json_params": [
+			"sourceSpec"
+		]
 	}
 ]
