@@ -281,5 +281,13 @@
 		"json_params": [
 			"sourceSpec"
 		]
+	},
+	{
+		"method_name": "revert",
+		"http_method": "PUT",
+		"url_endpoint": "/wkspaces/:wkname/revert/:path_to_revert",
+		"json_params": [
+			"changeset"
+		]
 	}
 ]
