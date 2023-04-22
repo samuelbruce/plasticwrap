@@ -10,7 +10,7 @@ class PlasticWrap:
     def __init__(self, api_url="http://localhost:9090/api/v1"):
         self.api_url = api_url
         self.api_process = None
-        method_definitions = json.load(open(os.path.join(os.path.dirname(__file__), "method_definitions.json"), "r"))
+        method_definitions = json.load(open(os.path.join(os.path.dirname(__file__), "methods.json"), "r"))
         method_factory = PlasticWrapMethodFactory(self, method_definitions)
         method_factory.generate_functions()
     
