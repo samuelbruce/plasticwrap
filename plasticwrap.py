@@ -49,62 +49,7 @@ class PlasticWrap:
             except:
                 return response.iter_lines()
         return None
-     
-    """
-    def get_workspaces(self):
-        url = self.api_url + "/wkspaces"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-        return None
-    
-    def get_switch_status(self, workspace):
-        url = self.api_url + "/wkspaces/" + workspace + "/switch"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return json.loads(response.content)["status"]
-        return None
-    
-    def switch_workspace(self, workspace, objectType, object):
-        url = self.api_url + "/wkspaces/" + workspace + "/switch"
-        params = {"objectType": objectType, "object": object}
-        response = requests.post(url, json=params)
-        if response.status_code == 200:
-            return True
-        return None
-    
-    def get_changes(self, workspace, types=None):
-        url = self.api_url + "/wkspaces/" + workspace + "/changes"
-        if types is None: types = "changed"
-        params = {"types": types}
-        response = requests.get(url, json=params)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        return None
-    
-    def undo_changes(self, workspace, paths):
-        url = self.api_url + "/wkspaces/" + workspace + "/changes"
-        params = {"paths": paths}
-        response = requests.delete(url, json=params)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        return None
-    
-    def checkout(self, workspace, path):
-        url = self.api_url + "/wkspaces/" + workspace + "/content/" + path
-        response = requests.put(url)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        return None
-    
-    def move(self, workspace, path, destination):
-        url = self.api_url + "/wkspaces/" + workspace + "/content/" + path
-        params = {"destination": destination}
-        response = requests.patch(url, json=params)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        return None
-    """
+
 
 class PlasticWrapMethod():
     def __init__(self, parent, http_method, url_endpoint, query=False, json_params=[]):
