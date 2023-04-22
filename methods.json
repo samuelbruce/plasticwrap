@@ -319,5 +319,12 @@
 		"http_method": "PATCH",
 		"url_endpoint": "/wkspaces/:wkname/shelvesets/:shelvesetId",
 		"_comment": "not successfully tested, returns 500"
+	},
+	{
+		"method_name": "partial_configure",
+		"http_method": "POST",
+		"url_endpoint": "/wkspaces/:wkName/partialconfigure",
+		"json_params": "instructions",
+		"_comment": "UNTESTED"
 	}
 ]
