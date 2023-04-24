@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "plasticwrap"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple wrapper for the Plastic SCM API."
 authors = ["Samuel Bruce <11494533+samuelbruce@users.noreply.github.com>"]
 license = "Unlicense"
