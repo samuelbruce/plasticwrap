@@ -53,11 +53,11 @@
 	{
 		"method_name": "rename_workspace",
 		"http_method": "PATCH",
-		"_comment": "Plastic documentation gives PUT for this method but it returns 405, PATCH is correct",
 		"url_endpoint": "/wkspaces/:wkname",
 		"json_params": [
 			"name"
-		]
+		],
+		"_comment": "Plastic documentation gives PUT for this method but PATCH is correct"
 	},
 	{
 		"method_name": "delete_workspace",
@@ -201,7 +201,7 @@
 			"comment",
 			"recurse"
 		],
-		"_comment": "Not successfully tested, requests return 200 but then get_checkin_status shows status Failed with message 'There are no changes in the workspace' when really there are"
+		"_comment": "Not successfully tested, requests return 200 but then get_checkin_status shows status Failed"
 	},
 	{
 		"method_name": "get_item_from_branch",
@@ -302,7 +302,7 @@
 			"revSpec",
 			"path"
 		],
-		"_comment": "not successfully tested, just getting http 500"
+		"_comment": "not successfully tested, returns http 500"
 	},
 	{
 		"method_name": "create_shelve",
@@ -311,14 +311,13 @@
 		"json_params": [
 			"comment",
 			"paths"
-		],
-		"_comment": "tested, but shelve is only created if files are first added to source control"
+		]
 	},
 	{
 		"method_name": "apply_shelve",
 		"http_method": "PATCH",
 		"url_endpoint": "/wkspaces/:wkname/shelvesets/:shelvesetId",
-		"_comment": "not successfully tested, returns 500"
+		"_comment": "not successfully tested, returns http 500"
 	},
 	{
 		"method_name": "partial_configure",
